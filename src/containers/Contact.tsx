@@ -1,8 +1,5 @@
 import { contactSection } from '@/lib/content/contact';
-
-import { Button, Wrapper } from '@/components';
-
-import { getSectionAnimation } from '@/styles/animations';
+import { Wrapper } from '@/components';
 
 const Contact = () => {
   const { subtitle, title, paragraphs } = contactSection;
@@ -10,8 +7,7 @@ const Contact = () => {
   return (
     <Wrapper
       id="contact"
-      className="max-w-xl mx-auto text-center  !py-16 md:!py-24 mb-20 md:mb-32"
-      {...getSectionAnimation}
+      className="max-w-xl mx-auto text-center !py-16 md:!py-24 mb-20 md:mb-32"
     >
       <p className="mb-3 font-mono text-sm capitalize text-accent">
         {subtitle}
@@ -19,21 +15,22 @@ const Contact = () => {
 
       <h2 className="heading-secondary !mb-5">{title}</h2>
 
-      {paragraphs.map((paragraph, i) => (
+      {paragraphs.map((paragraph: string, i: number) => (
         <p key={i}>{paragraph}</p>
       ))}
 
-      <Button
-        type="link"
-        size="lg"
-        href="mail.google.com/mail/u/0/?fs=1&to=vinitgiri2007@gmail.com&tf=cm"
-        center
-        className="mt-12"
+      {/* ✅ ALWAYS WORKING GMAIL LINK */}
+      <a
+        href="https://mail.google.com/mail/?view=cm&fs=1&to=vinitgiri2007@gmail.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center justify-center px-6 py-3 mt-12 border border-cyan-400 text-cyan-400 rounded-md hover:bg-cyan-400 hover:text-black transition"
       >
         Say Hello
-      </Button>
+      </a>
     </Wrapper>
   );
 };
 
 export default Contact;
+
