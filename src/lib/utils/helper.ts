@@ -15,36 +15,39 @@ export function cn(...inputs: ClassValue[]) {
  * @param breakpoint - Configured breakpoints: xs sm md lg xl 2xl
  * @returns width - Width of the breakpoint
  */
-
-export const getBreakpointsWidth = (breakpoint: BreakpointType) => {
+export const getBreakpointsWidth = (breakpoint: BreakpointType): number => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  return +fullConfig?.theme?.screens[breakpoint].slice(0, -2);
+  const value = fullConfig?.theme?.screens?.[breakpoint];
+
+  if (!value || typeof value !== 'string') return 0;
+
+  return parseInt(value.replace('px', ''), 10);
 };
 
 /**
  * Returns a unique id
- * @returns {String} Unique id format id123..
  */
-
-export const getId = () => `id${Math.random().toString(16).slice(2)}`;
+export const getId = (): string =>
+  `id${Math.random().toString(16).slice(2)}`;
 
 /**
- * Returns the projects by sorting them by year (descending)
- * @param {ProjectType[]} projects array of projects
- * @returns {ProjectType[]} array of sorted projects
+ * Returns the projects sorted by year (descending)
  */
-
-export const sortByYear = (projects: ProjectType[]) => {
-  return projects.sort((a, b) => b.year - a.year);
+export const sortByYear = <T extends { year: number }>(
+  projects: T[]
+): T[] => {
+  return [...projects].sort((a, b) => b.year - a.year);
 };
 
 /**
- * Modifies the given object by removing the given keys
- * @param object object from which keys need to be removed
- * @param keys array of keys which needs to be removed from the object
+ * Removes given keys from object
  */
-
-export const removeKeys = <T>(object: T, keys: Array<keyof T>) => {
-  keys.forEach((field) => delete object[field]);
+export const removeKeys = <T extends Record<string, any>>(
+  object: T,
+  keys: Array<keyof T>
+): void => {
+  keys.forEach((field) => {
+    delete object[field];
+  });
 };
